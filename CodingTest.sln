@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebPizzaStatistics", "WebPizzaStatisticsApp\WebPizzaStatistics.csproj", "{D6A8DB72-6A12-4899-9467-8135066EEA47}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebPizzaEventSimulator", "WebPizzaEventSimulatorApp\WebPizzaEventSimulator.csproj", "{6F401C2B-79F3-497E-A20F-50F03C5E7F21}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebPizzaCommon", "WebPizzaCommon\WebPizzaCommon.csproj", "{4FD59239-B8AF-4A6F-8897-4A953DC33DC3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{AFD34E99-6F46-4625-B238-120E8BD0CBC2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{06B817BD-91F3-491B-AE1C-6E9B4899ECC2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BEBDEF8A-3ADF-4770-BE7F-1869087EF50D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebPizzaCommon.Tests", "WebPizzaCommon.Tests\WebPizzaCommon.Tests.csproj", "{08E59C90-A687-49FC-8B98-3B5F59AB5C15}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D6A8DB72-6A12-4899-9467-8135066EEA47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6A8DB72-6A12-4899-9467-8135066EEA47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6A8DB72-6A12-4899-9467-8135066EEA47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6A8DB72-6A12-4899-9467-8135066EEA47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F401C2B-79F3-497E-A20F-50F03C5E7F21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F401C2B-79F3-497E-A20F-50F03C5E7F21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F401C2B-79F3-497E-A20F-50F03C5E7F21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F401C2B-79F3-497E-A20F-50F03C5E7F21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FD59239-B8AF-4A6F-8897-4A953DC33DC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FD59239-B8AF-4A6F-8897-4A953DC33DC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FD59239-B8AF-4A6F-8897-4A953DC33DC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FD59239-B8AF-4A6F-8897-4A953DC33DC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08E59C90-A687-49FC-8B98-3B5F59AB5C15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08E59C90-A687-49FC-8B98-3B5F59AB5C15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08E59C90-A687-49FC-8B98-3B5F59AB5C15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08E59C90-A687-49FC-8B98-3B5F59AB5C15}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D6A8DB72-6A12-4899-9467-8135066EEA47} = {AFD34E99-6F46-4625-B238-120E8BD0CBC2}
+		{6F401C2B-79F3-497E-A20F-50F03C5E7F21} = {AFD34E99-6F46-4625-B238-120E8BD0CBC2}
+		{4FD59239-B8AF-4A6F-8897-4A953DC33DC3} = {06B817BD-91F3-491B-AE1C-6E9B4899ECC2}
+		{08E59C90-A687-49FC-8B98-3B5F59AB5C15} = {BEBDEF8A-3ADF-4770-BE7F-1869087EF50D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {78D040C6-B00B-4F02-B707-1434A04B98F1}
+	EndGlobalSection
+EndGlobal
