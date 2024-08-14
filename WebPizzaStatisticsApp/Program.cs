@@ -3,6 +3,7 @@ using System.Net.Sockets;
 using System.Text;
 using ConsoleTables;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using WebPizzaCommon.Enums;
 using WebPizzaCommon.Managers;
 using WebPizzaCommon.Models;
@@ -16,10 +17,9 @@ namespace WebPizzaStatistics
         public static void Main(string[] args)
         {
             var serviceProvider = new ServiceCollection()
-                .AddSingleton<ITcpConnectionManager>(x => new TcpConnectionManager("localhost", 8888, true))
+                .AddSingleton<ITcpConnectionManager>(x => new TcpConnectionManager("localhost", 9999, true))
                 .AddSingleton<ICustomerManager, CustomerManager>()
                 .AddSingleton<IOrderManager, OrderManager>()
-                .AddSingleton<IInventoryManager, InventoryManager>()
                 .AddSingleton<ILoyaltyPointsManager, LoyaltyPointsManager>() 
                 .AddSingleton<IStatisticsService, StatisticsService>()
                 .BuildServiceProvider();
@@ -62,8 +62,9 @@ namespace WebPizzaStatistics
             {
                 try
                 {
-                    var eventData = tcpManager.ReadData(client);
+                    var eventJson = tcpManager.ReadData(client);
                     var eventData = JsonConvert.DeserializeObject<Event>(eventJson);
+                    if (eventData != null && EventUtility.TryParseEventData(eventData, out EventType eventType, out string customerId, out string additionalData))
                     {
                         var newEvent = new Event(eventType, customerId, additionalData);
                         statisticsService.UpdateStatistics(newEvent);

@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using WebPizzaCommon.Managers;
+using WebPizzaCommon.Models;
 
 namespace WebPizzaEventSimulator.Services
 {
@@ -22,15 +25,19 @@ namespace WebPizzaEventSimulator.Services
         {
             Console.WriteLine("Web Pizza Event Simulator");
             Console.WriteLine("---------------------------");
+            Console.WriteLine("Press any key to stop simulation ..");
+
+            var task = Task.Run(() => Console.ReadKey());
 
             try
             {
-                while (true)
+                while (!task.IsCompleted)
                 {
-                    string eventData = _eventDataGenerator.GenerateEventData();
-                    _tcpManager.SendData(eventData);
-                    Console.WriteLine($"Sent event data: {eventData}");
-                    Thread.Sleep(100);
+                    Event eventInstance = _eventDataGenerator.GenerateEventData();
+                    string jsonData = JsonConvert.SerializeObject(eventInstance);
+                    _tcpManager.SendData(jsonData);
+                    Console.WriteLine($"Sent event data: {jsonData}");
+                    Task.Delay(100).Wait();
                 }
             }
             finally
@@ -38,6 +45,7 @@ namespace WebPizzaEventSimulator.Services
                 _tcpManager.Dispose();
             }
 
+            Console.WriteLine("Simulation stopped");
         }
     }
 }

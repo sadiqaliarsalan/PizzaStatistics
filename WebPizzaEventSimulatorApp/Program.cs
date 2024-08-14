@@ -12,7 +12,7 @@ namespace WebPizzaEventSimulator
         public static void Main(string[] args)
         {
             string serverAddress = "localhost";
-            int serverPort = 8888;
+            int serverPort = 9999;
 
             var serviceProvider = new ServiceCollection()
                 .AddSingleton<ITcpConnectionManager>(provider => new TcpConnectionManager(serverAddress, serverPort))

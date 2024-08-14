@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace WebPizzaCommon.Models
 {
-    // Define a customer class
+    // Customer class
     public class Customer
     {
         public string Id { get; }
+
         public bool IsLoyaltyMember { get; set; }
 
         public Customer(string id)

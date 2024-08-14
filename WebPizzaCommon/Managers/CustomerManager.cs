@@ -20,19 +20,31 @@ namespace WebPizzaCommon.Managers
             }
         }
 
-        public void AddCustomer(Customer customer)
-        {
-            lock (_lock)
-            {
-                _customers[customer.Id] = customer;
-            }
-        }
-
         public List<Customer> GetAllCustomers()
         {
             lock (_lock)
             {
                 return _customers.Values.ToList();
+            }
+        }
+
+        public void AddCustomer(string customerId)
+        {
+            lock(_lock)
+            {
+                if (!_customers.ContainsKey(customerId))
+                    _customers[customerId] = new Customer(customerId);
+            }
+        }
+
+        public void UpdateLoyaltyStatus(string customerId, bool isLoyal)
+        {
+            lock (_lock)
+            {
+                if (_customers.TryGetValue(customerId, out var customer))
+                {
+                    customer.IsLoyaltyMember = isLoyal;
+                }
             }
         }
     }

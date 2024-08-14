@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebPizzaCommon.Enums;
+using WebPizzaCommon.Handlers;
 using WebPizzaCommon.Managers;
 using WebPizzaCommon.Models;
 
@@ -15,39 +16,33 @@ namespace WebPizzaStatistics.Services
         private readonly ICustomerManager _customerManager;
         private readonly IOrderManager _orderManager;
         private readonly ILoyaltyPointsManager _loyaltyPointsManager;
+        private Dictionary<EventType, IPizzaEventHandler> _eventHandlers;
 
         public StatisticsService(ICustomerManager customerManager, IOrderManager orderManager, ILoyaltyPointsManager loyaltyPointsManager)
         {
             _customerManager = customerManager;
             _orderManager = orderManager;
             _loyaltyPointsManager = loyaltyPointsManager;
+            InitEventHanlders();
+        }
+
+        private void InitEventHanlders()
+        {
+            _eventHandlers = new Dictionary<EventType, IPizzaEventHandler>
+            {
+                { EventType.PizzaOrdered, new OrderPlacedHandler(_orderManager) },
+                { EventType.CustomerCreated, new CustomerCreatedHandler(_customerManager) },
+                { EventType.CustomerAbandonedOrder, new CustomerAbandonedOrderHandler(_orderManager) },
+                { EventType.PaymentReceived, new PaymentReceivedHandler(_orderManager, _customerManager, _loyaltyPointsManager) },
+                { EventType.LoyaltySignup, new LoyaltySignupHandler(_customerManager) }
+            };
         }
 
         public void UpdateStatistics(Event newEvent)
         {
-            switch (newEvent.Type)
+            if (_eventHandlers.TryGetValue(newEvent.Type, out var handler))
             {
-                case EventType.PizzaOrdered:
-                    _orderManager.IncrementOrder(newEvent.CustomerId);
-                    break;
-                case EventType.CustomerCreated:
-                    _customerManager.AddCustomer(new Customer(newEvent.CustomerId));
-                    break;
-                case EventType.CustomerAbandonedOrder:
-                    _orderManager.DecrementOrder(newEvent.CustomerId);
-                    break;
-                case EventType.PaymentReceived:
-                    _orderManager.CompleteOrder(newEvent.CustomerId);
-                    if (_orderManager.GetCompletedOrderCount(newEvent.CustomerId) >= 3)
-                        _loyaltyPointsManager.AddLoyaltyPoints(newEvent.CustomerId, 10);
-                    break;
-                case EventType.LoyaltySignup:
-                    var customer = _customerManager.GetCustomer(newEvent.CustomerId);
-                    if (customer != null)
-                        customer.IsLoyaltyMember = true;
-                    break;
-                default:
-                    break;
+                handler.HandleEvent(newEvent);
             }
         }
 
@@ -70,13 +65,15 @@ namespace WebPizzaStatistics.Services
 
         public void StartDisplayLoop()
         {
-            while (true)
+            Console.WriteLine("Press any key to stop display loop ..");
+            var task = Task.Run(() => Console.ReadKey());
+            while (!task.IsCompleted)
             {
                 Console.Clear();
                 Console.WriteLine("Web Pizza Statistics");
                 Console.WriteLine("---------------------------------------------");
                 DisplayStatistics();
-                Thread.Sleep(1000);
+                Task.Delay(1000);
             }
         }
     }

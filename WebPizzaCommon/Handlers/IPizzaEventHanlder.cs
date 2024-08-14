@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using WebPizzaCommon.Models;
 
-namespace WebPizzaEventSimulator.Services
+namespace WebPizzaCommon.Handlers
 {
-    public interface IEventDataService
+    public interface IPizzaEventHandler
     {
-        Event GenerateEventData();
+        void HandleEvent(Event eventData);
     }
 }

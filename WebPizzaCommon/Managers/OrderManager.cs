@@ -12,11 +12,6 @@ namespace WebPizzaCommon.Managers
         private readonly Dictionary<string, int> _orders = new();
         private readonly Dictionary<string, int> _completedOrders = new();
         private readonly object _lock = new object();
-        private readonly IInventoryManager _inventoryManager;
-        public OrderManager(IInventoryManager inventoryManager)
-        {
-            _inventoryManager = inventoryManager;
-        }
 
         public int GetOrderCount(string customerId)
         {
@@ -42,8 +37,6 @@ namespace WebPizzaCommon.Managers
                     _orders[customerId]++;
                 else
                     _orders[customerId] = 1;
-
-                _inventoryManager.DecreaseInventory("PizzaType: Pepperoni", 1);
             }
         }
 
@@ -54,7 +47,6 @@ namespace WebPizzaCommon.Managers
                 if (_orders.ContainsKey(customerId) && _orders[customerId] > 0)
                 {
                     _orders[customerId]--;
-                    _inventoryManager.IncreaseInventory("PizzaType: Pepperoni", 1);
                 }
                 
             }

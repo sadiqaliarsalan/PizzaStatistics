@@ -10,7 +10,11 @@ namespace WebPizzaCommon.Managers
     public interface ICustomerManager
     {
         Customer GetCustomer(string customerId);
-        void AddCustomer(Customer customer);
+
+        void AddCustomer(string customerId);
+
         List<Customer> GetAllCustomers();
+
+        void UpdateLoyaltyStatus(string customerId, bool isLoyal);
     }
 }

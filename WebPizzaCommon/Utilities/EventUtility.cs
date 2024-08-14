@@ -4,30 +4,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebPizzaCommon.Enums;
+using WebPizzaCommon.Models;
 
 namespace WebPizzaCommon.Utilities
 {
     public static class EventUtility
     {
-        public static bool TryParseEventData(string eventData, out EventType eventType, out string customerId)
+        public static bool TryParseEventData(Event eventData, out EventType eventType, out string customerId, out string additionalData)
         {
             eventType = default;
             customerId = null;
+            additionalData = null;
 
-            var eventParts = eventData.Split(',');
-            if (eventParts.Length != 3)
-            {
-                Console.WriteLine("Invalid event data received.");
-                return false;
-            }
-
-            if (!Enum.TryParse(eventParts[0], out eventType))
+            if (!Enum.IsDefined(typeof(EventType), eventData.Type))
             {
                 Console.WriteLine("Invalid event type received.");
                 return false;
             }
 
-            customerId = eventParts[1];
+            eventType = eventData.Type;
+
+            if (string.IsNullOrEmpty(eventData.CustomerId))
+            {
+                Console.WriteLine("No customer ID provided.");
+                return false;
+            }
+
+            customerId = eventData.CustomerId;
+            additionalData = eventData.AdditionalData;
             return true;
         }
     }
