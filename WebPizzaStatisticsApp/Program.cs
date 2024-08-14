@@ -63,9 +63,9 @@ namespace WebPizzaStatistics
                 try
                 {
                     var eventData = tcpManager.ReadData(client);
-                    if (EventUtility.TryParseEventData(eventData, out EventType eventType, out string customerId))
+                    var eventData = JsonConvert.DeserializeObject<Event>(eventJson);
                     {
-                        var newEvent = new Event(eventType, customerId);
+                        var newEvent = new Event(eventType, customerId, additionalData);
                         statisticsService.UpdateStatistics(newEvent);
                     }
                 }
