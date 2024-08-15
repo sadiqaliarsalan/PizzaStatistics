@@ -43,6 +43,26 @@ namespace WebPizzaCommon.Tests.Managers
         }
 
         [Test]
+        public void DecrementOrder_ShouldNotChangeOrderCount_WhenNoOrdersExist_Test()
+        {
+            var customerId = "new customer id";
+            _orderManager.DecrementOrder(customerId);
+
+            Assert.AreEqual(0, _orderManager.GetOrderCount(customerId));
+        }
+
+        [Test]
+        public void DecrementOrder_ShouldNotDecreaseOrderCount_BelowZero_Test()
+        {
+            var customerId = "another customer id";
+            _orderManager.IncrementOrder(customerId);
+            _orderManager.DecrementOrder(customerId);
+            _orderManager.DecrementOrder(customerId); // try to decrement below 0
+
+            Assert.AreEqual(0, _orderManager.GetOrderCount(customerId));
+        }
+
+        [Test]
         public void CompleteOrder_ShouldTransferOrderToCompleted_WhenOrdersExist_Test()
         {
             var customerId = "some customer id";
