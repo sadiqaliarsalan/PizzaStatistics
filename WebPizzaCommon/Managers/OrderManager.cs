@@ -40,15 +40,27 @@ namespace WebPizzaCommon.Managers
             }
         }
 
+        // handle a case where an order if not found for a customer
+        // could be that abandon order is received before the order is even placed
         public void DecrementOrder(string customerId)
         {
             lock (_lock)
             {
-                if (_orders.ContainsKey(customerId) && _orders[customerId] > 0)
+                if (_orders.ContainsKey(customerId))
                 {
-                    _orders[customerId]--;
+                    if (_orders[customerId] > 0)
+                    {
+                        _orders[customerId]--;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"No active orders to decrement for customer: {customerId}");
+                    }
                 }
-                
+                else
+                {
+                    Console.WriteLine($"No orders found for customer: {customerId}");
+                }
             }
         }
 
